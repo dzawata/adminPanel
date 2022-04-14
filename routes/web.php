@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UsersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +18,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::prefix('admin')
+    // ->middleware([''])
+    ->group(function ($router) {
+        Route::get('/', [DashboardController::class, 'index']);
+        Route::get('dashboard', [DashboardController::class, 'index']);
+        Route::get('users', [UsersController::class, 'index'])->name('users');
+        Route::get('users/create', [UsersController::class, 'create'])->name('add-users');
+    });
