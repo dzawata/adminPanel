@@ -25,5 +25,6 @@ Route::prefix('admin')
         Route::get('/', [DashboardController::class, 'index']);
         Route::get('dashboard', [DashboardController::class, 'index']);
         Route::get('users', [UsersController::class, 'index'])->name('users');
-        Route::get('users/create', [UsersController::class, 'create'])->name('add-users');
+        Route::get('users/create', [UsersController::class, 'create'])->name('create-user');
+        Route::post('users/store', [UsersController::class, 'store'])->name('store-user');
     });
