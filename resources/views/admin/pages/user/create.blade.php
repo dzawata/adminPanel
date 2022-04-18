@@ -22,7 +22,7 @@ Tambah User
     <div class="card-body">
         <div class="row">
             <div class="col-lg-6">
-                <form id="form-create-user" data-action="{{ route('store-user') }}">
+                <form id="form-create-user" data-action="{{ route('store-user') }}" data-page-url="{{ route('users') }}">
                     <div class="form-group">
                         <label>Nama</label>
                         <input class="form-control" type="text" name="nama" autocomplete="off">
@@ -58,6 +58,12 @@ Tambah User
                     </div>
 
                     <div class="text-right">
+                        <a href="javascript:void(0)" class="btn btn-sm btn-warning btn-icon-split kembali">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-arrow-left"></i>
+                            </span>
+                            <span class="text">Kembali</span>
+                        </a>
                         <a href="javascript:void(0)" class="btn btn-sm btn-primary btn-icon-split simpan-user">
                             <span class="icon text-white-50">
                                 <i class="fas fa-save"></i>
@@ -78,6 +84,7 @@ Tambah User
 <script>
     jQuery('.simpan-user').on('click', function() {
 
+        let pageUrl = jQuery('#form-create-user').data('page-url');
         let url = jQuery('#form-create-user').data('action');
 
         jQuery.ajax({
@@ -103,8 +110,8 @@ Tambah User
                     jQuery('.help-block').html('');
 
                     setTimeout(() => {
-                        location.reload();
-                    }, 5000);
+                        window.location.href = pageUrl;
+                    }, 4000);
                 }
             },
             error: function(response) {
@@ -121,6 +128,11 @@ Tambah User
             }
         })
     });
+
+    jQuery('.kembali').on('click', function() {
+        let pageUrl = jQuery('#form-create-user').data('page-url');
+        window.location.href = pageUrl;
+    })
 </script>
 
 @endpush

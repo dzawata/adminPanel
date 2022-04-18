@@ -9,6 +9,13 @@ use Illuminate\Support\Facades\DB;
 
 class UserService
 {
+    public function list()
+    {
+        $users = User::get();
+
+        return $users;
+    }
+
     public function create($request)
     {
         try {

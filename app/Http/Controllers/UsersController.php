@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\Http\Requests\CreateUserRequest;
 use App\Services\UserService;
-use Exception;
 use Illuminate\Http\Request;
 
 class UsersController extends Controller
 {
-    public function index()
+
+    public function index(UserService $userService)
     {
-        return view('admin.pages.user.index');
+        $users = $userService->list();
+
+        return view('admin.pages.user.index', ['users' => $users]);
     }
 
     public function create()
@@ -25,12 +28,7 @@ class UsersController extends Controller
     ) {
         try {
 
-            $user = [
-                'nama' => 'Idhar Firmansyah',
-                'email' => 'interisty91@gmail.com'
-            ];
-
-            // $user = $userService->create($request);
+            $user = $userService->create($request);
 
             return response()->json([
                 'status' => true,
