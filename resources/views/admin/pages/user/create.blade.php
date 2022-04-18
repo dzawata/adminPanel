@@ -2,7 +2,10 @@
 
 @push('addon-style')
 <style>
-
+    .help-block {
+        font-style: italic;
+        color: red;
+    }
 </style>
 @endpush
 
@@ -23,25 +26,25 @@ Tambah User
                     <div class="form-group">
                         <label>Nama</label>
                         <input class="form-control" type="text" name="nama" autocomplete="off">
-                        <p class="help-block"></p>
+                        <p class="help-block help-block-nama"></p>
                     </div>
 
                     <div class="form-group">
                         <label>Email</label>
                         <input class="form-control" type="email" name="email" autocomplete="off">
-                        <p class="help-block"></p>
+                        <p class="help-block help-block-email"></p>
                     </div>
 
                     <div class="form-group">
                         <label>Password</label>
                         <input class="form-control" type="password" name="password">
-                        <p class="help-block"></p>
+                        <p class="help-block help-block-password"></p>
                     </div>
 
                     <div class="form-group">
                         <label>Confirm Password</label>
                         <input class="form-control" type="password" name="password_confirmation">
-                        <p class="help-block"></p>
+                        <p class="help-block help-block-password_confirmation"></p>
                     </div>
 
                     <div class="form-group">
@@ -51,10 +54,14 @@ Tambah User
                             <option value="2">User</option>
                             <option value="3" selected>None</option>
                         </select>
+                        <p class="help-block help-block-role"></p>
                     </div>
 
                     <div class="text-right">
-                        <a href="javascript:void(0)" class="btn btn-primary btn-icon-split simpan-user">
+                        <a href="javascript:void(0)" class="btn btn-sm btn-primary btn-icon-split simpan-user">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-save"></i>
+                            </span>
                             <span class="text">Simpan</span>
                         </a>
                     </div>
@@ -85,11 +92,23 @@ Tambah User
                 'nama': jQuery('input[name=nama]').val(),
                 'email': jQuery('input[name=email]').val(),
                 'password': jQuery('input[name=password]').val(),
-                'confirmation_password': jQuery('input[name=confirmation_password]').val(),
-                'role': jQuery('input[name=role]').val(),
+                'password_confirmation': jQuery('input[name=password_confirmation]').val(),
+                'role': jQuery('select[name=role]').val(),
             },
             success: function(response) {
                 console.log(response);
+            },
+            error: function(response) {
+                if (response.responseJSON !== undefined) {
+
+                    jQuery('.help-block').html('');
+
+                    let data = response.responseJSON.errors;
+                    for (let key in data) {
+                        jQuery('.help-block-' + key).html(`${data[key]}`);
+                    }
+                }
+
             }
         })
     });
