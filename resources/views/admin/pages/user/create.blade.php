@@ -96,7 +96,16 @@ Tambah User
                 'role': jQuery('select[name=role]').val(),
             },
             success: function(response) {
-                console.log(response);
+                if (response.status) {
+                    tata.success('Sukses simpan data', '', {
+                        position: 'tr'
+                    });
+                    jQuery('.help-block').html('');
+
+                    setTimeout(() => {
+                        location.reload();
+                    }, 5000);
+                }
             },
             error: function(response) {
                 if (response.responseJSON !== undefined) {

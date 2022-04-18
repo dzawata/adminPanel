@@ -7,3 +7,6 @@
 
 <!-- Custom scripts for all pages-->
 <script src="{{ asset('admin/js/sb-admin-2.min.js') }}"></script>
+
+<!-- Tata Toaster JS -->
+<script src="https://cdn.jsdelivr.net/npm/tata-js@0.1.5/dist/tata.min.js"></script>

@@ -25,11 +25,16 @@ class UsersController extends Controller
     ) {
         try {
 
-            $user = $userService->create($request);
+            $user = [
+                'nama' => 'Idhar Firmansyah',
+                'email' => 'interisty91@gmail.com'
+            ];
+
+            // $user = $userService->create($request);
 
             return response()->json([
                 'status' => true,
-                'message' => $user
+                'data' => $user
             ]);
         } catch (Exception $e) {
             return response()->json([
