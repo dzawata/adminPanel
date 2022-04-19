@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Exception;
 use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Services\UserService;
-use Illuminate\Http\Request;
 
 class UsersController extends Controller
 {
@@ -29,6 +29,37 @@ class UsersController extends Controller
         try {
 
             $user = $userService->create($request);
+
+            return response()->json([
+                'status' => true,
+                'data' => $user
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function edit(
+        int $id,
+        UserService $userService
+    ) {
+
+        $user = $userService->find($id);
+
+        return view('admin.pages.user.edit', ['user' => $user]);
+    }
+
+    public function update(
+        UpdateUserRequest $request,
+        UserService $userService,
+        $id
+    ) {
+        try {
+
+            $user = $userService->update($request, $id);
 
             return response()->json([
                 'status' => true,

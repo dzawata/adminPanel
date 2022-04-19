@@ -43,4 +43,52 @@ class UserService
             throw $e;
         }
     }
+
+    public function find(int $id)
+    {
+        $user = User::findOrFail($id);
+        if (!empty($user->id)) {
+            $userHasRole = UserHasRole::where('user_id', $id)->get();
+
+            $hasRole = [];
+            foreach ($userHasRole as $role) {
+                $hasRole = $role->role_id;
+            }
+
+            $user->role = $hasRole;
+        }
+
+        return $user;
+    }
+
+    public function update($request, $id)
+    {
+        try {
+            DB::beginTransaction();
+
+            $data = [
+                'name' => $request->nama,
+                'email' => $request->email
+            ];
+
+            if (!empty($request->password)) {
+                $data['password'] = password_hash($request->password, PASSWORD_BCRYPT);
+            }
+
+            $user = User::where('id', $id)
+                ->update($data);
+
+            UserHasRole::where('user_id', $id)
+                ->update(['role_id' => $request->role]);
+
+            DB::commit();
+
+            return $user;
+        } catch (Exception $e) {
+
+            DB::rollBack();
+
+            throw $e;
+        }
+    }
 }

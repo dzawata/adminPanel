@@ -10,28 +10,28 @@
 @endpush
 
 @section('title')
-Tambah User
+Edit User
 @endsection
 
 @section('content')
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h4 class="m-0 font-weight-bold text-primary">Tambah User</h4>
+        <h4 class="m-0 font-weight-bold text-primary">Edit User</h4>
     </div>
     <div class="card-body">
         <div class="row">
             <div class="col-lg-6">
-                <form id="form-create-user" data-action="{{ route('store-user') }}" data-page-url="{{ route('users') }}">
+                <form id="form-create-user" data-action="{{ route('update-user', $user->id) }}" data-page-url="{{ route('users') }}">
                     <div class="form-group">
                         <label>Nama</label>
-                        <input class="form-control" type="text" name="nama" autocomplete="off">
+                        <input class="form-control" type="text" name="nama" autocomplete="off" value="{{ $user->name }}">
                         <p class="help-block help-block-nama"></p>
                     </div>
 
                     <div class="form-group">
                         <label>Email</label>
-                        <input class="form-control" type="email" name="email" autocomplete="off">
+                        <input class="form-control" type="email" name="email" autocomplete="off" value="{{ $user->email }}">
                         <p class="help-block help-block-email"></p>
                     </div>
 
@@ -39,12 +39,6 @@ Tambah User
                         <label>Password</label>
                         <input class="form-control" type="password" name="password">
                         <p class="help-block help-block-password"></p>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Confirm Password</label>
-                        <input class="form-control" type="password" name="password_confirmation">
-                        <p class="help-block help-block-password_confirmation"></p>
                     </div>
 
                     <div class="form-group">
@@ -82,9 +76,12 @@ Tambah User
 @push('addon-script')
 
 <script>
+    jQuery('select[name=role]').val(1);
+
     let pageUrl = jQuery('#form-create-user').data('page-url');
 
     jQuery('.simpan-user').on('click', function() {
+
         let url = jQuery('#form-create-user').data('action');
 
         jQuery.ajax({
@@ -96,10 +93,10 @@ Tambah User
             'dataType': 'json',
             'cache': false,
             'data': {
+                '_method': 'PUT',
                 'nama': jQuery('input[name=nama]').val(),
                 'email': jQuery('input[name=email]').val(),
                 'password': jQuery('input[name=password]').val(),
-                'password_confirmation': jQuery('input[name=password_confirmation]').val(),
                 'role': jQuery('select[name=role]').val(),
             },
             success: function(response) {
@@ -112,6 +109,11 @@ Tambah User
                     setTimeout(() => {
                         window.location.href = pageUrl;
                     }, 4000);
+                } else {
+                    console.log(response);
+                    tata.error('Gagal simpan data, hubungi admin', '', {
+                        position: 'tr'
+                    });
                 }
             },
             error: function(response) {
@@ -124,7 +126,6 @@ Tambah User
                         jQuery('.help-block-' + key).html(`${data[key]}`);
                     }
                 }
-
             }
         })
     });

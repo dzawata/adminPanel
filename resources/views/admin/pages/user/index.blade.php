@@ -31,14 +31,16 @@ Users
                     <tr>
                         <th>Name</th>
                         <th>Email</th>
-                        <th></th>
+                        <th class="text-center">Edit</th>
+                        <th class="text-center">Hapus</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
                         <th>Name</th>
                         <th>Email</th>
-                        <th></th>
+                        <th class="text-center">Edit</th>
+                        <th class="text-center">Hapus</th>
                     </tr>
                 </tfoot>
                 <tbody>
@@ -46,8 +48,15 @@ Users
                     <tr>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
-                        <td>
-                            <a href="#" data-id="{{ $user->id }}">Edit</a>
+                        <td class="text-center">
+                            <a href="{{ route('edit-user', $user->id) }}" data-id="{{ $user->id }}" class="btn btn-success btn-circle btn-sm">
+                                <i class="fas fa-check"></i>
+                            </a>
+                        </td>
+                        <td class="text-center">
+                            <a href="javascript:void(0)" data-id="{{ $user->id }}" class="btn btn-danger btn-circle btn-sm">
+                                <i class="fas fa-trash"></i>
+                            </a>
                         </td>
                     </tr>
                     @endforeach
