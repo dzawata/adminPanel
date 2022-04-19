@@ -4,12 +4,18 @@ namespace App\Services;
 
 use Exception;
 use App\Models\User;
-use App\Models\UserHasRole;
 use App\Services\RoleService;
 use Illuminate\Support\Facades\DB;
 
 class UserService
 {
+    protected $roleService;
+
+    public function __construct(RoleService $roleService)
+    {
+        $this->roleService = $roleService;
+    }
+
     public function list()
     {
         $users = User::orderBy('id')->get();
@@ -30,7 +36,7 @@ class UserService
             ]);
 
             foreach ($request->role as $role) {
-                UserHasRole::create([
+                $this->roleService->create([
                     'role_id' => $role,
                     'user_id' => $user->id
                 ]);
@@ -51,8 +57,7 @@ class UserService
     {
         $user = User::findOrFail($id);
         if (!empty($user->id)) {
-            $roleService = new RoleService;
-            $userHasRole = $roleService->hasRole($user->id);
+            $userHasRole = $this->roleService->hasRole($user->id);
             $user->role = json_encode($userHasRole);
         }
 
@@ -78,10 +83,10 @@ class UserService
 
             if (!empty($request->role)) {
 
-                UserHasRole::where('user_id', $id)->delete();
+                $this->roleService->deleteByUser($id);
 
                 foreach ($request->role as $role) {
-                    UserHasRole::create([
+                    $this->roleService->create([
                         'role_id' => $role,
                         'user_id' => $id
                     ]);
