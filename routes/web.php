@@ -29,6 +29,7 @@ Route::prefix('admin')
         Route::post('users/store', [UsersController::class, 'store'])->name('store-user');
         Route::get('users/{id}/edit', [UsersController::class, 'edit'])->name('edit-user');
         Route::put('users/update/{id}', [UsersController::class, 'update'])->name('update-user');
+        Route::delete('users/delete/{id}', [UsersController::class, 'delete'])->name('delete-user');
 
         Route::get('roles', [RolesController::class, 'index'])->name('roles');
         Route::get('permissions', [PermissionsController::class, 'index'])->name('permissions');

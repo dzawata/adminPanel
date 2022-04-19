@@ -103,4 +103,14 @@ class UserService
             throw $e;
         }
     }
+
+    public function delete($id)
+    {
+        try {
+            $user = User::findOrFail($id);
+            $user->delete();
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
 }

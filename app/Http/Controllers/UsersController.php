@@ -71,4 +71,24 @@ class UsersController extends Controller
             ]);
         }
     }
+
+    public function delete(
+        $id,
+        UserService $userService
+    ) {
+        try {
+
+            $userService->delete($id);
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Sukses hapus data'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
 }

@@ -57,9 +57,13 @@ Users
                             </a>
                         </td>
                         <td class="text-center">
-                            <a href="javascript:void(0)" data-id="{{ $user->id }}" class="btn btn-danger btn-circle btn-sm">
+                            <!-- <a href="javascript:void(0)" data-id="{{ $user->id }}" class="btn btn-danger btn-circle btn-sm btn-hapus" data-toggle="confirmation" data-title="Hapus data?">
                                 <i class="fas fa-trash"></i>
-                            </a>
+                            </a> -->
+                            <form method="post" class="delete-form" data-route="{{route('delete-user',$user->id)}}">
+                                @method('delete')
+                                <a type="submit" class="btn btn-danger btn-circle btn-sm"><i class="fas fa-trash"></i></a>
+                            </form>
                         </td>
                     </tr>
                     @endforeach
@@ -79,9 +83,66 @@ Users
 <!-- Page level custom scripts -->
 <script src="{{ asset('admin/js/demo/datatables-demo.js') }}"></script>
 
+<!-- confirmation -->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
     jQuery(document).ready(function() {
         jQuery("#users").DataTable();
+    })
+
+    jQuery(".delete-form").on('click', function(e) {
+
+        e.preventDefault();
+
+        let url = jQuery(this).data('route');
+
+        Swal.fire({
+            title: 'Apakah anda yakin?',
+            text: "",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                jQuery.ajax({
+                    'headers': {
+                        'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                    },
+                    'url': url,
+                    'method': 'POST',
+                    'dataType': 'json',
+                    'cache': false,
+                    'data': {
+                        '_method': 'delete'
+                    },
+                    success: function(response) {
+                        if (response.status) {
+                            Swal.fire(
+                                'Deleted!',
+                                response.message,
+                                'success'
+                            );
+
+                            setTimeout(function() {
+                                location.reload();
+                            }, 2000);
+                        } else {
+                            console.log(response);
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Gagal hapus data',
+                                footer: '<a href=""></a>'
+                            })
+                        }
+                    }
+                })
+            }
+        })
     })
 </script>
 
