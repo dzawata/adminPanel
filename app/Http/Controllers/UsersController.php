@@ -47,8 +47,7 @@ class UsersController extends Controller
         UserService $userService
     ) {
 
-        $user = $userService->find($id);
-
+        $user = $userService->edit($id);
         return view('admin.pages.user.edit', ['user' => $user]);
     }
 

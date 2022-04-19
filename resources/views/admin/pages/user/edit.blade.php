@@ -1,6 +1,7 @@
 @extends('admin.layouts.app')
 
 @push('addon-style')
+<link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.27.1/slimselect.min.css" rel="stylesheet">
 <style>
     .help-block {
         font-style: italic;
@@ -43,10 +44,9 @@ Edit User
 
                     <div class="form-group">
                         <label>Role</label>
-                        <select class="form-control" name="role">
+                        <select id="role" name="role" data-value="{{ $user->role }}" multiple>
                             <option value="1">Admin</option>
                             <option value="2">User</option>
-                            <option value="3" selected>None</option>
                         </select>
                         <p class="help-block help-block-role"></p>
                     </div>
@@ -74,11 +74,14 @@ Edit User
 @endsection
 
 @push('addon-script')
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.27.1/slimselect.min.js"></script>
 <script>
-    jQuery('select[name=role]').val(1);
-
     let pageUrl = jQuery('#form-create-user').data('page-url');
+
+    const displaySelect = new SlimSelect({
+        select: '#role'
+    })
+    displaySelect.set(jQuery("#role").data('value'));
 
     jQuery('.simpan-user').on('click', function() {
 

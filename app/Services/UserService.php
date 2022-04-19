@@ -2,16 +2,17 @@
 
 namespace App\Services;
 
+use Exception;
 use App\Models\User;
 use App\Models\UserHasRole;
-use Exception;
+use App\Services\RoleService;
 use Illuminate\Support\Facades\DB;
 
 class UserService
 {
     public function list()
     {
-        $users = User::get();
+        $users = User::orderBy('id')->get();
 
         return $users;
     }
@@ -28,10 +29,12 @@ class UserService
                 'password' => password_hash($request->password, PASSWORD_BCRYPT)
             ]);
 
-            UserHasRole::create([
-                'role_id' => $request->role,
-                'user_id' => $user->id
-            ]);
+            foreach ($request->role as $role) {
+                UserHasRole::create([
+                    'role_id' => $role,
+                    'user_id' => $user->id
+                ]);
+            }
 
             DB::commit();
 
@@ -44,18 +47,13 @@ class UserService
         }
     }
 
-    public function find(int $id)
+    public function edit(int $id)
     {
         $user = User::findOrFail($id);
         if (!empty($user->id)) {
-            $userHasRole = UserHasRole::where('user_id', $id)->get();
-
-            $hasRole = [];
-            foreach ($userHasRole as $role) {
-                $hasRole = $role->role_id;
-            }
-
-            $user->role = $hasRole;
+            $roleService = new RoleService;
+            $userHasRole = $roleService->hasRole($user->id);
+            $user->role = json_encode($userHasRole);
         }
 
         return $user;
@@ -78,8 +76,17 @@ class UserService
             $user = User::where('id', $id)
                 ->update($data);
 
-            UserHasRole::where('user_id', $id)
-                ->update(['role_id' => $request->role]);
+            if (!empty($request->role)) {
+
+                UserHasRole::where('user_id', $id)->delete();
+
+                foreach ($request->role as $role) {
+                    UserHasRole::create([
+                        'role_id' => $role,
+                        'user_id' => $id
+                    ]);
+                }
+            }
 
             DB::commit();
 

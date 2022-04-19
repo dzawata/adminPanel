@@ -29,6 +29,7 @@ Users
             <table class="table table-bordered" id="users" width="100%" cellspacing="0">
                 <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Name</th>
                         <th>Email</th>
                         <th class="text-center">Edit</th>
@@ -37,6 +38,7 @@ Users
                 </thead>
                 <tfoot>
                     <tr>
+                        <th>ID</th>
                         <th>Name</th>
                         <th>Email</th>
                         <th class="text-center">Edit</th>
@@ -46,6 +48,7 @@ Users
                 <tbody>
                     @foreach($users as $user)
                     <tr>
+                        <td>{{ $user->id }}</td>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
                         <td class="text-center">

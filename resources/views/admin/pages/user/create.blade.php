@@ -1,6 +1,8 @@
 @extends('admin.layouts.app')
 
 @push('addon-style')
+<link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.27.1/slimselect.min.css" rel="stylesheet">
+</link>
 <style>
     .help-block {
         font-style: italic;
@@ -49,10 +51,9 @@ Tambah User
 
                     <div class="form-group">
                         <label>Role</label>
-                        <select class="form-control" name="role">
+                        <select id="role" name="role" multiple>
                             <option value="1">Admin</option>
                             <option value="2">User</option>
-                            <option value="3" selected>None</option>
                         </select>
                         <p class="help-block help-block-role"></p>
                     </div>
@@ -81,8 +82,13 @@ Tambah User
 
 @push('addon-script')
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.27.1/slimselect.min.js"></script>
 <script>
     let pageUrl = jQuery('#form-create-user').data('page-url');
+
+    const displaySelect = new SlimSelect({
+        select: '#role'
+    })
 
     jQuery('.simpan-user').on('click', function() {
         let url = jQuery('#form-create-user').data('action');
@@ -112,6 +118,11 @@ Tambah User
                     setTimeout(() => {
                         window.location.href = pageUrl;
                     }, 4000);
+                } else {
+                    console.log(response);
+                    tata.error('Gagal simpan data, hubungi admin', '', {
+                        position: 'tr'
+                    });
                 }
             },
             error: function(response) {
