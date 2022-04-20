@@ -24,7 +24,7 @@ Route::get('login', [LoginController::class, 'index']);
 Route::post('login/auth', [LoginController::class, 'authenticate'])->name('auth');
 
 Route::prefix('admin')
-    // ->middleware([''])
+    ->middleware(['auth.basic'])
     ->group(function ($router) {
         Route::get('/', [DashboardController::class, 'index']);
         Route::get('dashboard', [DashboardController::class, 'index']);
@@ -34,4 +34,6 @@ Route::prefix('admin')
         Route::get('users/{id}/edit', [UsersController::class, 'edit'])->name('edit-user');
         Route::put('users/update/{id}', [UsersController::class, 'update'])->name('update-user');
         Route::delete('users/delete/{id}', [UsersController::class, 'delete'])->name('delete-user');
+
+        Route::post('logout', [LoginController::class, 'logout'])->name('logout');
     });

@@ -77,6 +77,7 @@ Login
             'data': {
                 'email': jQuery('#inputEmail').val(),
                 'password': jQuery('#inputPassword').val(),
+                'rememberme': jQuery('#customCheck').is(':checked'),
             },
             'success': function(response) {
                 jQuery('.help-block').html('');

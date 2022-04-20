@@ -20,7 +20,7 @@ class LoginController extends Controller
             'password' => ['required'],
         ]);
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials, $request->rememberme)) {
             $request->session()->regenerate();
 
             return response()->json([
@@ -33,5 +33,16 @@ class LoginController extends Controller
             'status' => false,
             'message' => 'Email atau password tidak ditemukan!'
         ]);
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/');
     }
 }
