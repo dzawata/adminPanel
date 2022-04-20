@@ -1,5 +1,15 @@
 @extends('admin.layouts.auth')
 
+@push('addon-style')
+<style>
+    .help-block {
+        font-size: 12px;
+        color: crimson;
+        font-style: italic;
+    }
+</style>
+@endpush
+
 @section('title')
 Login
 @endsection
@@ -13,12 +23,16 @@ Login
             <div class="text-center">
                 <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
             </div>
-            <form class="user">
+            <p class="help-block help-block-message"></p>
+            <form id="formLogin" class="user" data-route="{{ route('auth') }}">
+                <!-- @csrf -->
                 <div class="form-group">
-                    <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                    <input type="email" class="form-control form-control-user" id="inputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                    <p class="help-block help-block-email"></p>
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
+                    <input type="password" class="form-control form-control-user" id="inputPassword" placeholder="Password">
+                    <p class="help-block help-block-password"></p>
                 </div>
                 <div class="form-group">
                     <div class="custom-control custom-checkbox small">
@@ -27,9 +41,12 @@ Login
                             Me</label>
                     </div>
                 </div>
-                <a href="index.html" class="btn btn-primary btn-user btn-block">
+                <a href="javascript:void(0)" class="btn btn-primary btn-user btn-block btn-login">
                     Login
                 </a>
+                <!-- <button type="submit" class="btn btn-primary btn-user btn-block btn-login">
+                    Login
+                </button> -->
             </form>
             <hr>
             <div class="text-center">
@@ -43,3 +60,42 @@ Login
 </div>
 
 @endsection
+
+@push('addon-script')
+<script>
+    let url = jQuery("#formLogin").data('route');
+
+    jQuery('.btn-login').on('click', function() {
+        jQuery.ajax({
+            'headers': {
+                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+            },
+            'url': url,
+            'method': 'POST',
+            'dataType': 'json',
+            'cache': false,
+            'data': {
+                'email': jQuery('#inputEmail').val(),
+                'password': jQuery('#inputPassword').val(),
+            },
+            'success': function(response) {
+                jQuery('.help-block').html('');
+                if (response.status) {
+                    window.location.href = "admin/dashboard";
+                }
+                jQuery('.help-block-message').html(response.message);
+            },
+            'error': function(response) {
+                if (response.responseJSON !== undefined) {
+                    jQuery('.help-block').html('');
+                    let data = response.responseJSON.errors;
+                    for (let key in data) {
+                        jQuery('.help-block-' + key).html(`${data[key]}`);
+                    }
+                }
+
+            }
+        })
+    })
+</script>
+@endpush
