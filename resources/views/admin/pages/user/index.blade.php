@@ -57,11 +57,7 @@ Users
                             </a>
                         </td>
                         <td class="text-center">
-                            <!-- <a href="javascript:void(0)" data-id="{{ $user->id }}" class="btn btn-danger btn-circle btn-sm btn-hapus" data-toggle="confirmation" data-title="Hapus data?">
-                                <i class="fas fa-trash"></i>
-                            </a> -->
                             <form method="post" class="delete-form" data-route="{{route('delete-user',$user->id)}}">
-                                @method('delete')
                                 <a type="submit" class="btn btn-danger btn-circle btn-sm"><i class="fas fa-trash"></i></a>
                             </form>
                         </td>

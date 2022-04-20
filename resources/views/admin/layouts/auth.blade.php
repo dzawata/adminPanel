@@ -11,7 +11,7 @@
 
     <title>@yield('title')</title>
 
-    @include('admin.includes.style')
+    @include('admin.includes.styles')
 
 </head>
 
