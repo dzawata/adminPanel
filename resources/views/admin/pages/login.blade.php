@@ -44,7 +44,7 @@ Login
                 <a href="javascript:void(0)" class="btn btn-primary btn-user btn-block btn-login">
                     Login
                 </a>
-                <!-- <button type="submit" class="btn btn-primary btn-user btn-block btn-login">
+                <!-- <button type="submit" class="btn btn-primary btn-user btn-block">
                     Login
                 </button> -->
             </form>
@@ -65,7 +65,15 @@ Login
 <script>
     let url = jQuery("#formLogin").data('route');
 
-    jQuery('.btn-login').on('click', function() {
+    $(document).on('keypress', function(e) {
+        if (e.which == 13) {
+            login();
+        }
+    });
+
+    jQuery('.btn-login').on('click', login);
+
+    function login() {
         jQuery.ajax({
             'headers': {
                 'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
@@ -97,6 +105,6 @@ Login
 
             }
         })
-    })
+    }
 </script>
 @endpush
