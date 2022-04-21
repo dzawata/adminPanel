@@ -23,7 +23,7 @@ class UserService
         return $users;
     }
 
-    public function create($request)
+    public function store($request)
     {
         try {
 

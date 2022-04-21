@@ -28,7 +28,7 @@ class UsersController extends Controller
     ) {
         try {
 
-            $user = $userService->create($request);
+            $user = $userService->store($request);
 
             return response()->json([
                 'status' => true,

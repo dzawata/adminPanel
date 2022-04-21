@@ -116,7 +116,7 @@
         <a class="nav-link" href="#">
             <i class="fas fa-fw fa-cog"></i>
             <span>Roles</span></a>
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="{{ route('permissions') }}">
             <i class="fas fa-fw fa-wrench"></i>
             <span>Permissions</span></a>
     </li>

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\UsersController;
 
 /*
@@ -34,6 +35,11 @@ Route::prefix('admin')
         Route::get('users/{id}/edit', [UsersController::class, 'edit'])->name('edit-user');
         Route::put('users/update/{id}', [UsersController::class, 'update'])->name('update-user');
         Route::delete('users/delete/{id}', [UsersController::class, 'delete'])->name('delete-user');
+
+        Route::get('permissions', [PermissionController::class, 'index'])->name('permissions');
+        Route::get('permissions/create', [PermissionController::class, 'create'])->name('create-permission');
+        Route::post('permissions/store', [PermissionController::class, 'store'])->name('store-permission');
+        Route::delete('permissions/delete/{id}', [PermissionController::class, 'delete'])->name('delete-permission');
 
         Route::post('logout', [LoginController::class, 'logout'])->name('logout');
     });
