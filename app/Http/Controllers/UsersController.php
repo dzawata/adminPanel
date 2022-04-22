@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\User;
 use App\Services\UserService;
 
 class UsersController extends Controller
@@ -12,6 +13,8 @@ class UsersController extends Controller
 
     public function index(UserService $userService)
     {
+        $this->authorize('list_users');
+
         $users = $userService->list();
 
         return view('admin.pages.user.index', ['users' => $users]);

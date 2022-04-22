@@ -32,6 +32,7 @@ Users
                         <th>ID</th>
                         <th>Name</th>
                         <th>Email</th>
+                        <th>Role</th>
                         <th class="text-center">Edit</th>
                         <th class="text-center">Hapus</th>
                     </tr>
@@ -41,6 +42,7 @@ Users
                         <th>ID</th>
                         <th>Name</th>
                         <th>Email</th>
+                        <th>Role</th>
                         <th class="text-center">Edit</th>
                         <th class="text-center">Hapus</th>
                     </tr>
@@ -51,6 +53,7 @@ Users
                         <td>{{ $user->id }}</td>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
+                        <td>{{ $user->role }}</td>
                         <td class="text-center">
                             <a href="{{ route('edit-user', $user->id) }}" data-id="{{ $user->id }}" class="btn btn-success btn-circle btn-sm">
                                 <i class="fas fa-check"></i>

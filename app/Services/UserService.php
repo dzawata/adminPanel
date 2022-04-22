@@ -19,7 +19,7 @@ class UserService
 
     public function list()
     {
-        $users = User::orderBy('id')->get();
+        $users = User::with('roles')->orderBy('id')->get();
 
         return $users;
     }
