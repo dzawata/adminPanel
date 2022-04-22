@@ -6,6 +6,7 @@ use Exception;
 use App\Models\User;
 use App\Services\RoleService;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 
 class UserService
 {
@@ -35,12 +36,7 @@ class UserService
                 'password' => password_hash($request->password, PASSWORD_BCRYPT)
             ]);
 
-            foreach ($request->role as $role) {
-                $this->roleService->create([
-                    'role_id' => $role,
-                    'user_id' => $user->id
-                ]);
-            }
+            $user->assignRole($request->role);
 
             DB::commit();
 
@@ -56,11 +52,16 @@ class UserService
     public function edit(int $id)
     {
         $user = User::findOrFail($id);
-        if (!empty($user->id)) {
-            $userHasRole = $this->roleService->hasRole($user->id);
-            $user->role = json_encode($userHasRole);
+
+        $roles = [];
+        $roleAll = Role::all();
+        foreach ($roleAll as $role) {
+            if ($user->hasRole($role->id)) {
+                $roles[] = $role->id;
+            }
         }
 
+        $user->role = json_encode($roles);
         return $user;
     }
 
@@ -78,20 +79,11 @@ class UserService
                 $data['password'] = password_hash($request->password, PASSWORD_BCRYPT);
             }
 
-            $user = User::where('id', $id)
-                ->update($data);
+            $user = User::findOrFail($id);
 
-            if (!empty($request->role)) {
+            $user->update($data);
 
-                $this->roleService->deleteByUser($id);
-
-                foreach ($request->role as $role) {
-                    $this->roleService->create([
-                        'role_id' => $role,
-                        'user_id' => $id
-                    ]);
-                }
-            }
+            $user->syncRoles($request->role);
 
             DB::commit();
 

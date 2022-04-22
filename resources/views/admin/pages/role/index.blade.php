@@ -19,7 +19,7 @@
         <div class="text-right">
             <a href="{{ route('create-role') }}" class="btn btn-sm btn-primary btn-icon-split">
                 <span class="icon text-white-50">
-                    <i class="fas fa-user"></i>
+                    <i class="fas fa-plus"></i>
                 </span>
                 <span class="text">Tambah Role</span>
             </a>
