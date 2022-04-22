@@ -100,6 +100,7 @@ class UserService
     {
         try {
             $user = User::findOrFail($id);
+            $user->roles()->detach();
             $user->delete();
         } catch (Exception $e) {
             throw $e;
