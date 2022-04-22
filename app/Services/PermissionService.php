@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Exception;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
 
 class PermissionService
@@ -26,6 +27,13 @@ class PermissionService
         } catch (Exception $e) {
             throw $e;
         }
+    }
+
+    public function find($id)
+    {
+        $permission = Permission::findOrFail($id);
+
+        return $permission;
     }
 
     public function delete($id)

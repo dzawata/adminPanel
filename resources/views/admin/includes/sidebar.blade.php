@@ -113,7 +113,7 @@
         <a class="nav-link" href="{{ route('users') }}">
             <i class="fas fa-fw fa-users"></i>
             <span>Users</span></a>
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="{{ route('roles') }}">
             <i class="fas fa-fw fa-cog"></i>
             <span>Roles</span></a>
         <a class="nav-link" href="{{ route('permissions') }}">

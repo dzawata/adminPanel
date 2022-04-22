@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UsersController;
 
 /*
@@ -35,6 +36,13 @@ Route::prefix('admin')
         Route::get('users/{id}/edit', [UsersController::class, 'edit'])->name('edit-user');
         Route::put('users/update/{id}', [UsersController::class, 'update'])->name('update-user');
         Route::delete('users/delete/{id}', [UsersController::class, 'delete'])->name('delete-user');
+
+        Route::get('roles', [RoleController::class, 'index'])->name('roles');
+        Route::get('roles/create', [RoleController::class, 'create'])->name('create-role');
+        Route::post('roles/store', [RoleController::class, 'store'])->name('store-role');
+        Route::get('roles/{id}/edit', [RoleController::class, 'edit'])->name('edit-role');
+        Route::put('roles/update/{id}', [RoleController::class, 'update'])->name('update-role');
+        Route::delete('roles/delete/{id}', [RoleController::class, 'delete'])->name('delete-role');
 
         Route::get('permissions', [PermissionController::class, 'index'])->name('permissions');
         Route::get('permissions/create', [PermissionController::class, 'create'])->name('create-permission');
