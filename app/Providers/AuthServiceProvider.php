@@ -25,6 +25,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
+        // super admin bisa akses semua permissions tanpa di assign terlebih dahulu
         // Gate::before(function ($user, $ability) {
         //     if ($user->hasRole('super-admin')) {
         //         return true;

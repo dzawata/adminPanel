@@ -67,7 +67,7 @@ class RoleService
                 'name' => $request->role
             ]);
 
-            $role->givePermissionTo($request->permissions);
+            $role->syncPermissions($request->permissions);
 
             DB::commit();
         } catch (Exception $e) {
