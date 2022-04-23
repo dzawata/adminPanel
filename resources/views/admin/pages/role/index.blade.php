@@ -17,12 +17,14 @@
     </div>
     <div class="card-body">
         <div class="text-right">
+            @can('create_role')
             <a href="{{ route('create-role') }}" class="btn btn-sm btn-primary btn-icon-split">
                 <span class="icon text-white-50">
                     <i class="fas fa-plus"></i>
                 </span>
                 <span class="text">Tambah Role</span>
             </a>
+            @endcan
         </div>
         <div class="my-2"></div>
         <div class="table-responsive">
@@ -49,14 +51,18 @@
                         <td>{{ $role->id }}</td>
                         <td>{{ $role->name }}</td>
                         <td class="text-center">
+                            @can('edit_role')
                             <a href="{{ route('edit-role', $role->id) }}" data-id="{{ $role->id }}" class="btn btn-success btn-circle btn-sm">
                                 <i class="fas fa-check"></i>
                             </a>
+                            @endcan
                         </td>
                         <td class="text-center">
+                            @can('delete_role')
                             <form method="post" class="delete-form" data-route="{{route('delete-role',$role->id)}}">
                                 <a type="submit" class="btn btn-danger btn-circle btn-sm"><i class="fas fa-trash"></i></a>
                             </form>
+                            @endcan
                         </td>
                     </tr>
                     @endforeach

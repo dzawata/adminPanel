@@ -21,6 +21,8 @@ class RoleController extends Controller
 
     public function index()
     {
+        $this->authorize('list_roles');
+
         $roles = $this->roleService->list();
 
         return view('admin.pages.role.index', [
@@ -31,6 +33,8 @@ class RoleController extends Controller
 
     public function create(PermissionService $permissionService)
     {
+        $this->authorize('create_role');
+
         $permissions = $permissionService->list();
 
         return view('admin.pages.role.create', [
@@ -41,6 +45,8 @@ class RoleController extends Controller
 
     public function store(CreateRoleRequest $request)
     {
+        $this->authorize('create_role');
+
         try {
             $role = $this->roleService->store($request);
 
@@ -58,7 +64,10 @@ class RoleController extends Controller
 
     public function edit(PermissionService $permissionService, $id)
     {
+        $this->authorize('edit_role');
+
         $role = $this->roleService->edit($id);
+
         return view('admin.pages.role.edit', [
             'title' => 'Edit Role',
             'role' => $role,
@@ -68,6 +77,9 @@ class RoleController extends Controller
 
     public function update(UpdateRoleRequest $request, int $id)
     {
+
+        $this->authorize('edit_role');
+
         try {
             $role = $this->roleService->update($request, $id);
 
@@ -85,6 +97,9 @@ class RoleController extends Controller
 
     public function delete($id)
     {
+
+        $this->authorize('delete_role');
+
         try {
 
             $this->roleService->delete($id);

@@ -66,12 +66,14 @@
                             </span>
                             <span class="text">Kembali</span>
                         </a>
+                        @can('create_user')
                         <a href="javascript:void(0)" class="btn btn-sm btn-primary btn-icon-split simpan-user">
                             <span class="icon text-white-50">
                                 <i class="fas fa-save"></i>
                             </span>
                             <span class="text">Simpan</span>
                         </a>
+                        @endcan
                     </div>
                 </form>
             </div>

@@ -17,12 +17,14 @@
     </div>
     <div class="card-body">
         <div class="text-right">
+            @can('create_permission')
             <a href="{{ route('create-permission') }}" class="btn btn-sm btn-primary btn-icon-split">
                 <span class="icon text-white-50">
                     <i class="fas fa-plus"></i>
                 </span>
                 <span class="text">Tambah Permission</span>
             </a>
+            @endcan
         </div>
         <div class="my-2"></div>
         <div class="table-responsive">
@@ -47,9 +49,11 @@
                         <td>{{ $permission->id }}</td>
                         <td>{{ $permission->name }}</td>
                         <td class="text-center">
+                            @can('delete_permission')
                             <form method="post" class="delete-form" data-route="{{route('delete-permission',$permission->id)}}">
                                 <a type="submit" class="btn btn-danger btn-circle btn-sm"><i class="fas fa-trash"></i></a>
                             </form>
+                            @endcan
                         </td>
                     </tr>
                     @endforeach
