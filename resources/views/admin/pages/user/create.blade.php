@@ -12,14 +12,14 @@
 @endpush
 
 @section('title')
-Tambah User
+{{ $title }}
 @endsection
 
 @section('content')
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h4 class="m-0 font-weight-bold text-primary">Tambah User</h4>
+        <h4 class="m-0 font-weight-bold text-primary">{{ $title }}</h4>
     </div>
     <div class="card-body">
         <div class="row">
@@ -52,8 +52,9 @@ Tambah User
                     <div class="form-group">
                         <label>Role</label>
                         <select id="role" name="role" multiple>
-                            <option value="1">Admin</option>
-                            <option value="2">User</option>
+                            @foreach($roles as $role)
+                            <option value="{{ $role->id }}">{{ $role->name }}</option>
+                            @endforeach
                         </select>
                         <p class="help-block help-block-role"></p>
                     </div>

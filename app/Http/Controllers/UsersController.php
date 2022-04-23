@@ -5,33 +5,50 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-use App\Models\User;
+use App\Services\RoleService;
 use App\Services\UserService;
 
 class UsersController extends Controller
 {
+    protected $userService;
+    protected $roleService;
 
-    public function index(UserService $userService)
+    public function __construct(
+        UserService $userService,
+        RoleService $roleService
+    ) {
+        $this->userService = $userService;
+        $this->roleService = $roleService;
+    }
+
+    public function index()
     {
         $this->authorize('list_users');
 
-        $users = $userService->list();
+        $users = $this->userService->list();
 
         return view('admin.pages.user.index', ['users' => $users]);
     }
 
     public function create()
     {
-        return view('admin.pages.user.create');
+        $this->authorize('create_user');
+
+        $roles = $this->roleService->list();
+
+        return view('admin.pages.user.create', [
+            'title' => 'Tambah User',
+            'roles' => $roles
+        ]);
     }
 
-    public function store(
-        CreateUserRequest $request,
-        UserService $userService
-    ) {
+    public function store(CreateUserRequest $request)
+    {
+        $this->authorize('create_user');
+
         try {
 
-            $user = $userService->store($request);
+            $user = $this->userService->store($request);
 
             return response()->json([
                 'status' => true,
@@ -45,23 +62,28 @@ class UsersController extends Controller
         }
     }
 
-    public function edit(
-        int $id,
-        UserService $userService
-    ) {
+    public function edit(int $id)
+    {
+        $this->authorize('edit_user');
 
-        $user = $userService->edit($id);
-        return view('admin.pages.user.edit', ['user' => $user]);
+        $user = $this->userService->edit($id);
+
+        $roles = $this->roleService->list();
+
+        return view('admin.pages.user.edit', [
+            'title' => 'Edit User',
+            'user' => $user,
+            'roles' => $roles
+        ]);
     }
 
-    public function update(
-        UpdateUserRequest $request,
-        UserService $userService,
-        $id
-    ) {
+    public function update(UpdateUserRequest $request, int $id)
+    {
+        $this->authorize('edit_user');
+
         try {
 
-            $user = $userService->update($request, $id);
+            $user = $this->userService->update($request, $id);
 
             return response()->json([
                 'status' => true,
@@ -75,13 +97,13 @@ class UsersController extends Controller
         }
     }
 
-    public function delete(
-        $id,
-        UserService $userService
-    ) {
+    public function delete(int $id)
+    {
+        $this->authorize('delete_user');
+
         try {
 
-            $userService->delete($id);
+            $this->userService->delete($id);
 
             return response()->json([
                 'status' => true,

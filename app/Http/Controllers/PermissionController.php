@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Http\Requests\CreatePermissionRequest;
 use App\Services\PermissionService;
-use Spatie\Permission\Models\Permission;
 
 class PermissionController extends Controller
 {

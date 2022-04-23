@@ -17,12 +17,14 @@ Users
     </div>
     <div class="card-body">
         <div class="text-right">
+            @can('create_user')
             <a href="{{ route('create-user') }}" class="btn btn-sm btn-primary btn-icon-split">
                 <span class="icon text-white-50">
                     <i class="fas fa-plus"></i>
                 </span>
                 <span class="text">Tambah User</span>
             </a>
+            @endcan
         </div>
         <div class="my-2"></div>
         <div class="table-responsive">
@@ -55,14 +57,18 @@ Users
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->role }}</td>
                         <td class="text-center">
+                            @can('edit_user')
                             <a href="{{ route('edit-user', $user->id) }}" data-id="{{ $user->id }}" class="btn btn-success btn-circle btn-sm">
                                 <i class="fas fa-check"></i>
                             </a>
+                            @endcan
                         </td>
                         <td class="text-center">
+                            @can('edit_user')
                             <form method="post" class="delete-form" data-route="{{route('delete-user',$user->id)}}">
                                 <a type="submit" class="btn btn-danger btn-circle btn-sm"><i class="fas fa-trash"></i></a>
                             </form>
+                            @endcan
                         </td>
                     </tr>
                     @endforeach

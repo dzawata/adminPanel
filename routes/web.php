@@ -6,6 +6,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\SettingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,7 @@ Route::prefix('admin')
     ->group(function ($router) {
         Route::get('/', [DashboardController::class, 'index']);
         Route::get('dashboard', [DashboardController::class, 'index']);
+
         Route::get('users', [UsersController::class, 'index'])->name('users');
         Route::get('users/create', [UsersController::class, 'create'])->name('create-user');
         Route::post('users/store', [UsersController::class, 'store'])->name('store-user');
@@ -48,6 +50,8 @@ Route::prefix('admin')
         Route::get('permissions/create', [PermissionController::class, 'create'])->name('create-permission');
         Route::post('permissions/store', [PermissionController::class, 'store'])->name('store-permission');
         Route::delete('permissions/delete/{id}', [PermissionController::class, 'delete'])->name('delete-permission');
+
+        Route::get('remove-cache', [SettingController::class, 'removeCacheRoleAndPermission'])->name('remove-cache');
 
         Route::post('logout', [LoginController::class, 'logout'])->name('logout');
     });

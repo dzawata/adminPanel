@@ -119,6 +119,9 @@
         <a class="nav-link" href="{{ route('permissions') }}">
             <i class="fas fa-fw fa-wrench"></i>
             <span>Permissions</span></a>
+        <a class="nav-link" href="{{ route('remove-cache') }}" target="_blank">
+            <i class="fas fa-fw fa-wrench"></i>
+            <span>Clear Cache</span></a>
     </li>
 
     <!-- Divider -->
