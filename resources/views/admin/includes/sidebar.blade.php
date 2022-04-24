@@ -105,7 +105,7 @@
 
     <!-- Heading -->
     <div class="sidebar-heading">
-        Administrations
+        User Administrations
     </div>
 
     <!-- Nav Item - Tables -->
@@ -119,6 +119,17 @@
         <a class="nav-link" href="{{ route('permissions') }}">
             <i class="fas fa-fw fa-wrench"></i>
             <span>Permissions</span></a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Settings
+    </div>
+
+    <li class="nav-item">
         <a class="nav-link" href="{{ route('remove-cache') }}" target="_blank">
             <i class="fas fa-fw fa-wrench"></i>
             <span>Clear Cache</span></a>

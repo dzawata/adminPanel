@@ -19,9 +19,22 @@ class UserService
 
     public function list()
     {
-        $users = User::with('roles')->orderBy('id')->get();
+        $users = User::orderBy('id')->get();
 
-        return $users;
+        $data = [];
+        foreach ($users as $user) {
+
+            $role = $user->getRoleNames();
+
+            $data[] = (object)[
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'role' => $role[0]
+            ];
+        }
+
+        return $data;
     }
 
     public function store($request)
