@@ -24,11 +24,11 @@ class PermissionsDemoSeeder extends Seeder
         Permission::create(['name' => 'create_user']);
         Permission::create(['name' => 'edit_user']);
         Permission::create(['name' => 'delete_user']);
-        Permission::create(['name' => 'list_permissions']);
         Permission::create(['name' => 'list_roles']);
         Permission::create(['name' => 'create_role']);
         Permission::create(['name' => 'edit_role']);
         Permission::create(['name' => 'delete_role']);
+        Permission::create(['name' => 'list_permissions']);
         Permission::create(['name' => 'create_permission']);
         Permission::create(['name' => 'delete_permission']);
 
