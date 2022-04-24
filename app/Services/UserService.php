@@ -28,7 +28,7 @@ class UserService
                 'id' => $user->id,
                 'name' => $user->name,
                 'email' => $user->email,
-                'role' => $user->roles->pluck('name')[0]
+                'role' => $user->getRoleNames()[0]
             ];
         }
 
