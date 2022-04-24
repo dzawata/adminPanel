@@ -24,13 +24,11 @@ class UserService
         $data = [];
         foreach ($users as $user) {
 
-            $role = $user->getRoleNames();
-
             $data[] = (object)[
                 'id' => $user->id,
                 'name' => $user->name,
                 'email' => $user->email,
-                'role' => $role[0]
+                'role' => $user->roles->pluck('name')[0]
             ];
         }
 
