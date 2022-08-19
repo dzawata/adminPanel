@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\AuthService;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
@@ -13,15 +14,16 @@ class LoginController extends Controller
         return view('admin.pages.login');
     }
 
-    public function authenticate(Request $request)
+    public function authenticate(Request $request, AuthService $authService)
     {
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
 
-        if (Auth::attempt($credentials, $request->rememberme)) {
-            $request->session()->regenerate();
+        $auth = $authService->authenticate($credentials, $request);
+
+        if ($auth->status) {
 
             return response()->json([
                 'status' => true,
@@ -31,7 +33,7 @@ class LoginController extends Controller
 
         return response()->json([
             'status' => false,
-            'message' => 'Email atau password tidak ditemukan!'
+            'message' => 'Akun tidak ditemukan!'
         ]);
     }
 
