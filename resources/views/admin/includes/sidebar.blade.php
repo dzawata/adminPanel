@@ -46,7 +46,7 @@
         </a>
         <div id="collapse2" class="collapse" aria-labelledby="heading2" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="{{ route('remove-cache') }}">Clears Cache</a>
+                <a class="collapse-item" href="{{ route('remove-cache') }}" target="_blank">Clears Cache</a>
             </div>
         </div>
     </li>
