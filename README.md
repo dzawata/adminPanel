@@ -8,12 +8,12 @@ Admin Panel menggunakan template [SBAdmin2](https://startbootstrap.com/theme/sb-
 
 ## How to use
 
-- **Git clone via https://github.com/dzawata/adminPanel.git atau Download ZIP**
-- **Ubah file .env.example menjadi .env dan lakukan konfigurasi sesuai database yang digunakan**
-- **Lakukan generating app key dengan perintah php artisan key:generate**
-- **Install package via Composer dengan perintah composer install**
-- **Generate file autoload dengan composer dump-autoload**
-- **Lakukan migration dan seed dengan perintah php artisan migrate:fresh --seed --seeder=PermissionsDemoSeeder**
+- Git clone via https://github.com/dzawata/adminPanel.git atau Download ZIP
+- Ubah file **.env.example** menjadi **.env** dan lakukan konfigurasi sesuai database yang digunakan
+- Install package via Composer dengan perintah **composer install**
+- Generate file autoload dengan perintah **composer dump-autoload** 
+- Lakukan generating app key dengan perintah **php artisan key:generate**
+- Lakukan migration dan seed dengan perintah **php artisan migrate:fresh --seed --seeder=PermissionsDemoSeeder**
 
 ## Contributing
 
