@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\MenusController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UsersController;
@@ -30,7 +31,13 @@ Route::prefix('admin')
     ->middleware(['auth.basic'])
     ->group(function ($router) {
         Route::get('/', [DashboardController::class, 'index']);
-        Route::get('dashboard', [DashboardController::class, 'index']);
+        Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+        Route::controller(MenusController::class)->group(function () {
+            Route::get('menus', 'index')->name('menus');
+            Route::get('menus/{id}/edit', 'edit')->name('edit-menu');
+            Route::delete('menus/delete/{id}', 'delete')->name('delete-menu');
+        });
 
         Route::get('users', [UsersController::class, 'index'])->name('users');
         Route::get('users/create', [UsersController::class, 'create'])->name('create-user');

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
+use Illuminate\Support\Facades\DB;
 
 class PermissionsDemoSeeder extends Seeder
 {
@@ -44,6 +45,71 @@ class PermissionsDemoSeeder extends Seeder
 
         // asign role to user
         $user->assignRole($role);
+
+        //create menu seeder
+        DB::table('menus')->insertGetId([
+            'parent_id' => 0,
+            'name' => 'Dashboard',
+            'url' => 'dashboard',
+            'icon' => 'fa-tachometer-alt',
+            'created_at' => date('Y-m-d H:i:s')
+        ]);
+
+        $id = DB::table('menus')->insertGetId([
+            'parent_id' => 0,
+            'name' => 'User Administration',
+            'url' => '#',
+            'icon' => 'fa-cog',
+            'created_at' => date('Y-m-d H:i:s')
+        ]);
+
+        DB::table('menus')->insertGetId([
+            'parent_id' => $id,
+            'name' => 'Users',
+            'url' => 'users',
+            'icon' => '',
+            'created_at' => date('Y-m-d H:i:s')
+        ]);
+
+        DB::table('menus')->insertGetId([
+            'parent_id' => $id,
+            'name' => 'Roles',
+            'url' => 'roles',
+            'icon' => '',
+            'created_at' => date('Y-m-d H:i:s')
+        ]);
+
+        DB::table('menus')->insertGetId([
+            'parent_id' => $id,
+            'name' => 'Permissions',
+            'url' => 'permissions',
+            'icon' => '',
+            'created_at' => date('Y-m-d H:i:s')
+        ]);
+
+        DB::table('menus')->insertGetId([
+            'parent_id' => 0,
+            'name' => 'Menus',
+            'url' => 'menus',
+            'icon' => 'fa-link',
+            'created_at' => date('Y-m-d H:i:s')
+        ]);
+
+        $id = DB::table('menus')->insertGetId([
+            'parent_id' => 0,
+            'name' => 'Settings',
+            'url' => '#',
+            'icon' => 'fa-cog',
+            'created_at' => date('Y-m-d H:i:s')
+        ]);
+
+        DB::table('menus')->insertGetId([
+            'parent_id' => $id,
+            'name' => 'Remove Cache',
+            'url' => 'remove-cache',
+            'icon' => '',
+            'created_at' => date('Y-m-d H:i:s')
+        ]);
 
         // run this command to migrate demo seeder 
         // php artisan migrate:fresh --seed --seeder=PermissionsDemoSeeder
