@@ -2,7 +2,7 @@
 
 Admin Panel adalah template admin yang dibangun menggunakan framework Laravel. Laravel sendiri adalah sebuah framework basis web yang sangat populer saat ini dan sudah banyak digunakan di pengembangan aplikasi berbasis web. Laravel juga didukung dokumentasi yang lengkap serta komunitas yang aktif.
 
-Admin panel sudah didukung login multi level user dari library [spatie v5](https:spatie.be) yang menggunakan banyak role juga permissions. Dengan menggunakan permissions maka setiap end point route sudah di definisikan sesuai dengan permissionnya.
+Admin panel sudah didukung login multi level user dari library [spatie v5](https://spatie.be/docs/laravel-permission/v5/introduction) yang menggunakan banyak role juga permissions. Dengan menggunakan permissions maka setiap end point route sudah di definisikan sesuai dengan permissionnya.
 
 Admin Panel menggunakan template [SBAdmin2](https://startbootstrap.com/theme/sb-admin-2)
 
